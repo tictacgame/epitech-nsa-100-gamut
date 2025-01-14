@@ -1,7 +1,7 @@
 #!/bin/bash
 
 loadkeys fr
-pacman- Sy
+pacman -Sy
 @echo "[Instruction] Press N -> x4 Enter"
 @echo "[Instruction] Press A"
 @echo "[Instruction] Press W"

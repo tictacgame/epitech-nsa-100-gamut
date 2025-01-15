@@ -10,6 +10,7 @@ pacman -Sy
 echo "Création de la partition pour LVM..."
 # Créer une partition unique de type Linux LVM (8e)
 (
+echo g    # Créer une nouvelle partition GPT
 echo n    # Nouvelle partition
 echo p    # Partition primaire
 echo 1    # Numéro de partition

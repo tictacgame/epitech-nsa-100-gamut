@@ -88,12 +88,18 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "Création du mot de passe root..."
 echo "Veuillez définir le mot de passe root :"
-passwd
+(
+echo ok
+echo ok
+) | passwd
 
 # Création de l'utilisateur
 useradd -m -g users -G wheel -s /bin/bash tmpusr
 echo "Veuillez définir le mot de passe pour tmpusr :"
-passwd tmpusr
+(
+echo ok
+echo ok
+) | passwd tmpusr
 
 # Configuration de sudo
 echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers

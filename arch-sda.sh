@@ -15,6 +15,9 @@ echo p    # Partition primaire
 echo 1    # Numéro de partition
 echo      # Premier secteur (défaut)
 echo      # Dernier secteur (défaut - utilise tout l'espace)
+echo e    # Redimensionne la partition
+echo      # Numéro de la partition (défault 1)
+echo 21G  # Défini la taille de la partition a 21G
 echo t    # Changer le type
 echo 8e   # Type Linux LVM
 echo w    # Écrire les changements

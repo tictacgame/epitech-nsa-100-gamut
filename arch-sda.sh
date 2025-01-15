@@ -7,28 +7,33 @@ loadkeys fr
 pacman -Sy
 
 # Partitionnement du disque
-echo "Création de la partition pour LVM..."
-# Créer une partition unique de type Linux LVM (8e)
+echo "Création des partitions EFI et LVM..."
 (
-echo g    # Créer une nouvelle partition GPT
+echo g    # Créer une nouvelle table de partition GPT
 echo n    # Nouvelle partition
-echo p    # Partition primaire
 echo 1    # Numéro de partition
 echo      # Premier secteur (défaut)
-echo      # Dernier secteur (défaut - utilise tout l'espace)
-echo e    # Redimensionne la partition
-echo 21G  # Défini la taille de la partition a 21G
+echo +512M # Taille de la partition EFI
 echo t    # Changer le type
-echo 8e   # Type Linux LVM
+echo 1    # Type EFI System
+echo n    # Nouvelle partition
+echo 2    # Numéro de partition
+echo      # Premier secteur (défaut)
+echo      # Dernier secteur (défaut)
+echo t    # Changer le type
+echo 2    # Sélectionner la deuxième partition
+echo 30   # Type LVM
 echo w    # Écrire les changements
 ) | fdisk /dev/sda
 
+# Formatage de la partition EFI
+mkfs.fat -F32 /dev/sda1
+
 # Configuration LVM
-pvcreate /dev/sda1
-vgcreate vol0 /dev/sda1
+pvcreate /dev/sda2
+vgcreate vol0 /dev/sda2
 
 # Création des volumes logiques
-# Notez: MO = MB, GO = GB
 lvcreate -L 400M vol0 -n lv_swap
 lvcreate -L 500M vol0 -n lv_boot
 lvcreate -L 15G vol0 -n lv_root
@@ -37,21 +42,21 @@ lvcreate -L 5G vol0 -n lv_home
 # Formatage des partitions
 mkfs.ext4 /dev/vol0/lv_root
 mkfs.ext4 /dev/vol0/lv_home
-mkfs.ext2 /dev/vol0/lv_boot    # ext2 pour /boot est suffisant
+mkfs.ext4 /dev/vol0/lv_boot    # ext4 pour boot en UEFI
 mkswap /dev/vol0/lv_swap
 swapon /dev/vol0/lv_swap
 
 # Montage des systèmes de fichiers
 mount /dev/vol0/lv_root /mnt
-mkdir /mnt/boot
+mkdir -p /mnt/{boot,home,boot/efi}
 mount /dev/vol0/lv_boot /mnt/boot
-mkdir /mnt/home
+mount /dev/sda1 /mnt/boot/efi
 mount /dev/vol0/lv_home /mnt/home
 
 # Installation du système de base
 pacstrap /mnt base base-devel linux linux-firmware lvm2 networkmanager \
     network-manager-applet dialog wpa_supplicant wireless_tools \
-    iw iproute2 vim neovim nano sudo
+    iw iproute2 vim neovim nano sudo efibootmgr
 
 # Génération du fstab
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -82,9 +87,9 @@ HOSTS
 sed -i 's/^HOOKS=.*/HOOKS=(base udev autodetect modconf block lvm2 filesystems keyboard fsck)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 
-# Installation et configuration de GRUB
+# Installation et configuration de GRUB pour UEFI
 pacman -S --noconfirm grub
-grub-install --target=i386-pc /dev/sda
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "Création du mot de passe root..."

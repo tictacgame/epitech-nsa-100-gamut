@@ -100,7 +100,7 @@ echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 # Activation des services
 systemctl enable NetworkManager
-echo "Use script install from tictacgame repo" >> /dev/installscript
+@echo "Use script install from tictacgame repo (sda option)" >> /dev/installscript
 EOF
 
 echo "Installation terminée. Vous pouvez maintenant redémarrer le système."

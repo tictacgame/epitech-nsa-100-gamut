@@ -42,15 +42,18 @@ lvcreate -L 5G vol0 -n lv_home
 # Formatage des partitions
 mkfs.ext4 /dev/vol0/lv_root
 mkfs.ext4 /dev/vol0/lv_home
-mkfs.ext4 /dev/vol0/lv_boot    # ext4 pour boot en UEFI
+mkfs.ext4 /dev/vol0/lv_boot
 mkswap /dev/vol0/lv_swap
 swapon /dev/vol0/lv_swap
 
 # Montage des systèmes de fichiers
 mount /dev/vol0/lv_root /mnt
-mkdir -p /mnt/{boot,home,boot/efi}
+mkdir -p /mnt/boot
+mkdir -p /mnt/home
+mkdir -p /mnt/efi  # Changement ici: /efi au lieu de /boot/efi
+
 mount /dev/vol0/lv_boot /mnt/boot
-mount /dev/sda1 /mnt/boot/efi
+mount /dev/sda1 /mnt/efi  # Changement ici: monter directement dans /efi
 mount /dev/vol0/lv_home /mnt/home
 
 # Installation du système de base
@@ -89,7 +92,7 @@ mkinitcpio -P
 
 # Installation et configuration de GRUB pour UEFI
 pacman -S --noconfirm grub
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB  # Changement ici: /efi
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "Création du mot de passe root..."

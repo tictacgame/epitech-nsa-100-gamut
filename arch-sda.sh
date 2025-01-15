@@ -55,7 +55,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 # Préparation du chroot
 echo "Configuration système dans chroot..."
-arch-chroot /mnt /bin/bash << EOF
+arch-chroot /mnt << EOF
 
 # Configuration du fuseau horaire
 ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime

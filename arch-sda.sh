@@ -42,7 +42,7 @@ lvcreate -L 5G vol0 -n lv_home
 # Formatage des partitions
 mkfs.ext4 /dev/vol0/lv_root
 mkfs.ext4 /dev/vol0/lv_home
-mkfs.ext4 /dev/vol0/lv_boot
+mkfs.ext2 /dev/vol0/lv_boot
 mkswap /dev/vol0/lv_swap
 swapon /dev/vol0/lv_swap
 
@@ -92,8 +92,8 @@ mkinitcpio -P
 
 # Installation et configuration de GRUB pour UEFI
 pacman -S --noconfirm grub
-grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB  # Changement ici: /efi
-grub-mkconfig -o /boot/grub/grub.cfg
+#grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB  # Changement ici: /efi
+#grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "Création du mot de passe root..."
 echo "Veuillez définir le mot de passe root :"
@@ -103,12 +103,12 @@ echo ok
 ) | passwd
 
 # Création de l'utilisateur
-useradd -m -g users -G wheel -s /bin/bash tmpusr
-echo "Veuillez définir le mot de passe pour tmpusr :"
+useradd -m -g users -G wheel -s /bin/bash admin
+echo "Veuillez définir le mot de passe pour admin :"
 (
 echo ok
 echo ok
-) | passwd tmpusr
+) | passwd admin
 
 # Configuration de sudo
 echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers

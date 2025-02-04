@@ -7,7 +7,8 @@
 - Internet Connexion
 
 ## DESCRIPTION PROJECT
-Unit : G1-Networks-And-System-Administration
+- Unit : G1-Networks-And-System-Administration
+- Project : GAMUT
 
 Installation command
 ```bash

@@ -3,7 +3,7 @@
 ## Minimal configuration
 - RAM : 2G
 - PROCESSOR : 1
-- DISK : 60G
+- DISK : 61G (recommended 120G)
 - Internet Connexion
 
 ## DESCRIPTION PROJECT
@@ -13,6 +13,8 @@
 Installation command
 ```bash
 curl https://raw.githubusercontent.com/tictacgame/install-gamut/refs/heads/master/arch-sda.sh -o install.sh && chmod +x install.sh && ./install.sh
+or
+curl https://raw.githubusercontent.com/tictacgame/install-gamut/refs/heads/master/arch-x-parrot.sh -o install.sh && chmod +x install.sh && ./install.sh
 ```
 
 Student : Kevin

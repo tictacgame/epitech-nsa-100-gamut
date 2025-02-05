@@ -66,13 +66,10 @@ mkswap /dev/sda6
 
 # Montage des systèmes de fichiers
 mount /dev/vol0/lv_root /mnt
-mkdir -p /mnt/boot
-mkdir -p /mnt/home
-mkdir -p /mnt/efi
 
-mount /dev/vol0/lv_boot /mnt/boot
-mount /dev/sda1 /mnt/efi
-mount /dev/vol0/lv_home /mnt/home
+mount --mkdir /dev/vol0/lv_boot /mnt/boot
+mount --mkdir /dev/sda1 /mnt/efi
+mount --mkdir /dev/vol0/lv_home /mnt/home
 
 # Installation du système de base
 pacstrap /mnt base base-devel linux linux-firmware lvm2 networkmanager \

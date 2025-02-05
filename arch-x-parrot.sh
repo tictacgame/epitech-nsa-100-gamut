@@ -24,15 +24,19 @@ echo t     # Changer le type
 echo 2     # Sélectionner la deuxième partition
 echo 44    # Type LVM
 echo n     # Nouvelle partition
+echo 3     # Sélectionner la partition
 echo       # Premier secteur (défaut)
 echo +25G  # Dernier secteur
 echo n     # Nouvelle partition
+echo 4     # Sélectionner la partition
 echo       # Premier secteur (défaut)
 echo +5G   # Dernier secteur
 echo n     # Nouvelle partition
+echo 5     # Sélectionner la partition
 echo       # Premier secteur (défaut)
 echo +500M # Dernier secteur
 echo n     # Nouvelle partition
+echo 6     # Sélectionner la partition
 echo       # Premier secteur (défaut)
 echo +500M # Dernier secteur
 echo w     # Écrire les changements

@@ -12,10 +12,6 @@
 
 Installation command
 ```bash
-curl https://raw.githubusercontent.com/tictacgame/install-gamut/refs/heads/master/arch-sda.sh -o install.sh && chmod +x install.sh && ./install.sh
-```
-or
-```bash
 curl https://raw.githubusercontent.com/tictacgame/install-gamut/refs/heads/master/arch-x-parrot.sh -o install.sh && chmod +x install.sh && ./install.sh
 ```
 
